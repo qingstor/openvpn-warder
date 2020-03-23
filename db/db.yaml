@@ -1,0 +1,11 @@
+users:
+  - name: user1
+    password: passwd1
+    updated_at: 2020-03-17
+    admin: True
+    ignore: True
+  - name: user2
+    password: passwd2
+    updated_at: 2020-03-17
+    admin: False
+    ignore: False
