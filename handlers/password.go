@@ -69,7 +69,9 @@ func sendEmail(m *config.Email, sendTo string, content string) (err error) {
 }
 
 func makeMailContent(user, newPassword, updateAt string) string {
-	return fmt.Sprintf("Your password of openvpn account %s has been changed to %s\n\nUpdate at: %s", user, newPassword, updateAt)
+	return fmt.Sprintf(
+		"Your password of openvpn account has been changed\naccount: %s\npassword: %s\nupdate at:%s",
+		user, newPassword, updateAt)
 }
 
 func checkMail(m *config.Email) (err error) {
@@ -129,7 +131,7 @@ func changeUserPassword(m *config.Email, cycle int) (err error) {
 		}
 		db.Users[index] = user
 		content := makeMailContent(*user.Name, *user.Password, updatedAt)
-		err = sendEmail(m, "chartoldong@yunify.com", content)
+		err = sendEmail(m, *user.Name, content)
 		if err != nil {
 			return err
 		}
