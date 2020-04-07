@@ -1,0 +1,14 @@
+port: 1080
+
+log_path: /var/log/openvpn_warder.log
+
+update_cycle: 30
+db_path: "db/db.yaml"
+
+email:
+  host: smtp.yunify.com
+  port: 465
+  encryption: ssl # support none, tls and ssl
+  auth: login # supoort plain, login, crammd5
+  user: user@yunify.com
+  password: passwd

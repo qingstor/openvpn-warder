@@ -9,11 +9,23 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+// Email represent server email config.
+type Email struct {
+	Host       *string `yaml:"host"`
+	Port       *int    `yaml:"port"`
+	Encryption *string `yaml:"encryption"`
+	Auth       *string `yaml:"auth"`
+	User       *string `yaml:"user"`
+	Password   *string `yaml:"password"`
+}
+
 // WarderServer represent server config.
 type WarderServer struct {
 	Port        *int    `yaml:"port"`
+	LogPath     *string `yaml:"log_path"`
 	UpdateCycle *int    `yaml:"update_cycle"`
 	DBPath      *string `yaml:"db_path"`
+	Mail        *Email  `yaml:"email"`
 }
 
 // NewWarderServer create a DB config.
@@ -56,11 +68,35 @@ func (w *WarderServer) check() error {
 	if w.Port == nil {
 		return errors.New("Warder server port is not defined")
 	}
+	if w.LogPath == nil {
+		return errors.New("Warder server log_path is not defined")
+	}
 	if w.UpdateCycle == nil {
 		return errors.New("Warder server update_cycle is not defined")
 	}
 	if w.DBPath == nil {
 		return errors.New("Warder server db_path is not defined")
+	}
+	if w.Mail == nil {
+		return errors.New("Warder server mail is not defined")
+	}
+	if w.Mail.Host == nil {
+		return errors.New("Warder server mail.host is not defined")
+	}
+	if w.Mail.Port == nil {
+		return errors.New("Warder server mail.port is not defined")
+	}
+	if w.Mail.Encryption == nil {
+		return errors.New("Warder server mail.encryption is not defined")
+	}
+	if w.Mail.Auth == nil {
+		return errors.New("Warder server mail.auth is not defined")
+	}
+	if w.Mail.User == nil {
+		return errors.New("Warder server mail.user is not defined")
+	}
+	if w.Mail.Password == nil {
+		return errors.New("Warder server mail.password is not defined")
 	}
 
 	return nil

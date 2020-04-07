@@ -1,4 +1,0 @@
-port: 1080
-
-update_cycle: 30
-db_path: "db/db.yaml"

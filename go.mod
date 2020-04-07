@@ -8,6 +8,7 @@ require (
 	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/sirupsen/logrus v1.4.2
 	github.com/spf13/cobra v0.0.5
+	github.com/xhit/go-simple-mail/v2 v2.3.0
 	golang.org/x/crypto v0.0.0-20181203042331-505ab145d0a9
 	gopkg.in/yaml.v2 v2.2.4
 )

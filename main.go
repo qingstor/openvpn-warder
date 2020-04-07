@@ -36,6 +36,15 @@ var application = &cobra.Command{
 			return
 		}
 		config.DBPath = *c.DBPath
+		err = log.InitLogger(*c.LogPath)
+		if err != nil {
+			check.ErrorForExit(constants.Name, err)
+		}
+
+		err = handlers.CycleChangePassword(c.Mail, *c.UpdateCycle)
+		if err != nil {
+			check.ErrorForExit(constants.Name, err)
+		}
 
 		addr := fmt.Sprintf("0.0.0.0:%d", *c.Port)
 		app := gin.Default()
