@@ -17,4 +17,9 @@
 # config
 db/*.yaml
 conf/*.yaml
+
+#log
 *.log
+
+# binary
+bin/
