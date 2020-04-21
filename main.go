@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
@@ -27,6 +28,18 @@ var application = &cobra.Command{
 		if flagVersion {
 			fmt.Printf("%s version %s\n", constants.Name, constants.Version)
 			return
+		}
+
+		// Client
+		userName := os.Getenv("username")
+		userPassword := os.Getenv("password")
+		if userName != "" && userPassword != "" {
+			clientConfig := config.NewClient()
+			err := clientConfig.LoadFromFilePath(config.DefaultClientConfigPath)
+			if err != nil {
+				check.ErrorForExit(constants.Name, err)
+			}
+			client.VerifyUser(clientConfig, userName, userPassword)
 		}
 
 		c := config.NewWarderServer()

@@ -17,6 +17,9 @@ type Client struct {
 	AuthPassword *string `yaml:"auth_password" json:"auth_password"`
 }
 
+// DefaultClientConfigPath represent default client config path.
+const DefaultClientConfigPath = "/qingstor/etc/openvpn-warder-client.yaml"
+
 // NewClient create a global DB config.
 func NewClient() *Client {
 	return &Client{}
