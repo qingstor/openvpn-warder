@@ -11,8 +11,8 @@ type GetUserResp struct {
 	Name      string `json:"name"`
 	Password  string `json:"password"`
 	UpdatedAt string `json:"updated_at"`
-	Admin     string `json:"admin"`
-	Ignore    string `json:"ignore"`
+	Admin     bool   `json:"admin"`
+	Ignore    bool   `json:"ignore"`
 }
 
 func generatePassword(salt, rawPasswd string) []byte {
