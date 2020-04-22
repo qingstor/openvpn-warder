@@ -61,6 +61,9 @@ var application = &cobra.Command{
 
 		addr := fmt.Sprintf("0.0.0.0:%d", *c.Port)
 		app := gin.Default()
+		app.GET("/ping", func(c *gin.Context) {
+			c.JSON(200, gin.H{"message": "pong"})
+		})
 		app.POST("/users/get", handlers.HandleGetUser)
 		app.POST("/users/create", handlers.HandleCreateUser)
 		app.POST("/users/delete", handlers.HandleDeleteUser)
