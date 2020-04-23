@@ -25,4 +25,4 @@ conf/*.yaml
 bin/
 
 # Dockerfile
-Dockerfile
+Dockerfile*
