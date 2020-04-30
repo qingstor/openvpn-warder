@@ -69,10 +69,10 @@ func sendEmail(m *config.Email, sendTo string, content string) (err error) {
 	return
 }
 
-func makeMailContent(user, newPassword, updateAt string) string {
+func makeMailContent(user, newPassword, updateAt, vpnName string) string {
 	return fmt.Sprintf(
-		"Your password of openvpn account has been changed\naccount: %s\npassword: %s\nupdate at:%s",
-		user, newPassword, updateAt)
+		"Your password of %s openvpn account has been changed\naccount: %s\npassword: %s\nupdate at:%s",
+		vpnName, user, newPassword, updateAt)
 }
 
 func checkMail(m *config.Email) (err error) {
@@ -106,7 +106,7 @@ func generatePassword() (password string) {
 	return string(b)
 }
 
-func changeUserPassword(m *config.Email, cycle int) (err error) {
+func changeUserPassword(m *config.Email, cycle int, vpnName string) (err error) {
 	db, err := readEntireDB()
 	if err != nil {
 		return err
@@ -133,7 +133,7 @@ func changeUserPassword(m *config.Email, cycle int) (err error) {
 			return err
 		}
 		db.Users[index] = user
-		content := makeMailContent(*user.Name, *user.Password, updatedAt)
+		content := makeMailContent(*user.Name, *user.Password, updatedAt, vpnName)
 		err = sendEmail(m, *user.Name, content)
 		if err != nil {
 			continue
@@ -148,14 +148,14 @@ func changeUserPassword(m *config.Email, cycle int) (err error) {
 }
 
 // CycleChangePassword will change user password cyclly.
-func CycleChangePassword(m *config.Email, cycle int) (err error) {
+func CycleChangePassword(m *config.Email, cycle int, vpnName string) (err error) {
 	err = checkMail(m)
 	if err != nil {
 		return
 	}
 	go func() {
 		for true {
-			err = changeUserPassword(m, cycle)
+			err = changeUserPassword(m, cycle, vpnName)
 			if err != nil {
 				log.Logger.Error(err)
 				time.Sleep(20 * time.Second)

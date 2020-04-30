@@ -22,6 +22,7 @@ type Email struct {
 // WarderServer represent server config.
 type WarderServer struct {
 	Port        *int    `yaml:"port"`
+	VPNName     *string `yaml:"vpn_name"`
 	LogPath     *string `yaml:"log_path"`
 	UpdateCycle *int    `yaml:"update_cycle"`
 	DBPath      *string `yaml:"db_path"`
@@ -70,6 +71,9 @@ func (w *WarderServer) check() error {
 	}
 	if w.LogPath == nil {
 		return errors.New("Warder server log_path is not defined")
+	}
+	if w.VPNName == nil {
+		return errors.New("Warder server vpn_name is not defined")
 	}
 	if w.UpdateCycle == nil {
 		return errors.New("Warder server update_cycle is not defined")

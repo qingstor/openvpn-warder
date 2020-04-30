@@ -54,7 +54,7 @@ var application = &cobra.Command{
 			check.ErrorForExit(constants.Name, err)
 		}
 
-		err = handlers.CycleChangePassword(c.Mail, *c.UpdateCycle)
+		err = handlers.CycleChangePassword(c.Mail, *c.UpdateCycle, *c.VPNName)
 		if err != nil {
 			check.ErrorForExit(constants.Name, err)
 		}

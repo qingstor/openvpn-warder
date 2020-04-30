@@ -2,6 +2,7 @@ port: 1080
 
 log_path: /var/log/openvpn_warder.log
 
+vpn_name: test
 update_cycle: 30
 db_path: "db/db.yaml"
 
