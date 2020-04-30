@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/qingstor/openvpn-warder/config"
+	"github.com/qingstor/openvpn-warder/log"
 	mail "github.com/xhit/go-simple-mail/v2"
 )
 
@@ -94,6 +95,8 @@ func checkUserCycle(user *config.User, cycle int) (needChange bool, err error) {
 }
 
 func generatePassword() (password string) {
+	rand.Seed(time.Now().Unix())
+
 	const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
 	var length int = 32
 	b := make([]byte, length)
@@ -133,7 +136,7 @@ func changeUserPassword(m *config.Email, cycle int) (err error) {
 		content := makeMailContent(*user.Name, *user.Password, updatedAt)
 		err = sendEmail(m, *user.Name, content)
 		if err != nil {
-			return err
+			continue
 		}
 
 		err = writeEntireDB(db)
@@ -152,7 +155,12 @@ func CycleChangePassword(m *config.Email, cycle int) (err error) {
 	}
 	go func() {
 		for true {
-			changeUserPassword(m, cycle)
+			err = changeUserPassword(m, cycle)
+			if err != nil {
+				log.Logger.Error(err)
+				time.Sleep(20 * time.Second)
+				continue
+			}
 			time.Sleep(24 * time.Hour)
 		}
 	}()
